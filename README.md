@@ -34,6 +34,63 @@ git remote add origin git@github.com:coding-to-music/nycbike-redisgraph-react-go
 git push -u origin main
 ```
 
+## Errors getting backend data
+
+```java
+docker build -t nycbike backend
+```
+
+Output:
+
+```java
+Sending build context to Docker daemon  19.97kB
+Step 1/10 : FROM alpine AS base
+ ---> e66264b98777
+Step 2/10 : RUN apk add --no-cache curl wget
+ ---> Using cache
+ ---> 3da957b1292a
+Step 3/10 : FROM golang:1.11 AS go-builder
+ ---> 43a154fee764
+Step 4/10 : WORKDIR /go/app
+ ---> Using cache
+ ---> 7014a5436739
+Step 5/10 : COPY . /go/app
+ ---> Using cache
+ ---> b7fde7ada087
+Step 6/10 : RUN GO111MODULE=on  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/app/main /go/app/main.go
+ ---> Running in 3988b84d016c
+go: finding github.com/gorilla/mux v1.8.0
+go: finding github.com/gorilla/handlers v1.5.1
+go: finding github.com/mitchsw/redisgraph-go v0.2.0
+go: finding github.com/olekukonko/tablewriter v0.0.5
+go: finding github.com/gomodule/redigo v1.8.4
+go: finding github.com/mattn/go-runewidth v0.0.9
+go: finding github.com/gomodule/redigo v1.8.2
+go: finding github.com/olekukonko/tablewriter v0.0.4
+go: finding github.com/stretchr/testify v1.6.1
+go: finding github.com/stretchr/testify v1.5.1
+go: finding github.com/felixge/httpsnoop v1.0.1
+go: finding github.com/mattn/go-runewidth v0.0.7
+go: finding github.com/pmezard/go-difflib v1.0.0
+go: finding github.com/stretchr/objx v0.1.0
+go: finding github.com/davecgh/go-spew v1.1.0
+go: finding gopkg.in/yaml.v2 v2.2.2
+go: finding gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+go: gopkg.in/yaml.v2@v2.2.2: unknown revision v2.2.2
+go: gopkg.in/yaml.v3@v3.0.0-20200313102051-9f266ea9e77c: git fetch -f origin refs/heads/*:refs/heads/* refs/tags/*:refs/tags/* in /go/pkg/mod/cache/vcs/5ea86ba1b933025fb7a7a539058d4acea777e0b3175c573a70130f7ea565323f: exit status 128:
+        fatal: unable to access 'https://gopkg.in/yaml.v3/': server certificate verification failed. CAfile: none CRLfile: none
+go: error loading module requirements
+The command '/bin/sh -c GO111MODULE=on  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/app/main /go/app/main.go' returned a non-zero code: 1
+```
+
+I tried these but they did not work:
+
+```java
+sudo apt update && sudo apt install ca-certificates libgnutls30 -y
+
+sudo apt-get --allow-releaseinfo-change update && sudo apt upgrade -y
+```
+
 # NYC Bike
 
 _[Build on Redis Hackathon](https://redislabs.com/hackathon-2021/) entry, mitchsw, 2021-05-12._
