@@ -1,3 +1,39 @@
+# nycbike-redisgraph-react-go-charts
+
+# 🚀 Javascript full-stack 🚀
+
+https://github.com/coding-to-music/nycbike-redisgraph-react-go-charts
+
+https://nycbike-redisgraph-react-go-charts.vercel.app
+
+From / By https://github.com/mitchsw/nycbike
+
+https://redislabs.com/hackathon-2021
+
+https://docs.mapbox.com/help/glossary/access-token/
+
+## Environment variables:
+
+Create a Mapbox Access Token and write it to frontend/.env:
+
+https://docs.mapbox.com/help/glossary/access-token
+
+```java
+echo "REACT_APP_MAPBOX_ACCESS_TOKEN=<your-token>" > frontend/.env
+```
+
+## GitHub
+
+```java
+git init
+git add .
+git remote remove origin
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:coding-to-music/nycbike-redisgraph-react-go-charts.git
+git push -u origin main
+```
+
 # NYC Bike
 
 _[Build on Redis Hackathon](https://redislabs.com/hackathon-2021/) entry, mitchsw, 2021-05-12._
@@ -6,16 +42,17 @@ A visual geospatial index of over 58 million [bikeshare trips](https://www.citib
 
 **Live Demo**: https://nycbike.mitchsw.com/
 
-![Full visual UI](https://raw.githubusercontent.com/mitchsw/nycbike/main/full_ui.png?raw=true)*Full visual UI.*
+![Full visual UI](https://raw.githubusercontent.com/mitchsw/nycbike/main/full_ui.png?raw=true)_Full visual UI._
 
-![Zoomed-in UI](https://raw.githubusercontent.com/mitchsw/nycbike/main/zoom_ui.png?raw=true)*Zoomed-in view of trips between a few stations.*
+![Zoomed-in UI](https://raw.githubusercontent.com/mitchsw/nycbike/main/zoom_ui.png?raw=true)_Zoomed-in view of trips between a few stations._
 
 ## System Overview
 
 The visual UI is built using:
-  1.  [RedisGraph](https://oss.redislabs.com/redisgraph/) through [redismod](https://hub.docker.com/r/redislabs/redismod),
-  2. a Go backend (behind an nginx reverse proxy),
-  3. a React frontend. 
+
+1.  [RedisGraph](https://oss.redislabs.com/redisgraph/) through [redismod](https://hub.docker.com/r/redislabs/redismod),
+2.  a Go backend (behind an nginx reverse proxy),
+3.  a React frontend.
 
 This infrastructure can be started from docker-compose.yml.
 
@@ -80,7 +117,7 @@ MATCH (src:Station{id: $src})
 MATCH (dst:Station{id: $dst})
 MERGE (src)-[t:Trip]->(dst)
 ON CREATE
-  SET t.counts = [n in range(0, 167) | CASE WHEN n = $hour THEN 1 ELSE 0 END] 
+  SET t.counts = [n in range(0, 167) | CASE WHEN n = $hour THEN 1 ELSE 0 END]
 ON MATCH
   SET t.counts = t.counts[0..$hour] + [t.counts[$hour]+1] + t.counts[($hour+1)..168]
 ```

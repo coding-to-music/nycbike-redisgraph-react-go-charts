@@ -1,0 +1,21 @@
+{
+  "name": "nycbike-redisgraph-react-go-charts",
+  "version": "1.0.0",
+  "description": "_[Build on Redis Hackathon](https://redislabs.com/hackathon-2021/) entry, mitchsw, 2021-05-12._",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "git add . && git commit -m Build && git push",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchsw/nycbike.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitchsw/nycbike/issues"
+  },
+  "homepage": "https://github.com/mitchsw/nycbike#readme"
+}
