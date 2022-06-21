@@ -19,6 +19,7 @@ Create a Mapbox Access Token and write it to frontend/.env:
 https://docs.mapbox.com/help/glossary/access-token
 
 ```java
+
 echo "REACT_APP_MAPBOX_ACCESS_TOKEN=<your-token>" > frontend/.env
 ```
 
