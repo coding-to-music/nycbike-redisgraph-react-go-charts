@@ -34,61 +34,87 @@ git remote add origin git@github.com:coding-to-music/nycbike-redisgraph-react-go
 git push -u origin main
 ```
 
-## Errors getting backend data
+## Successfully doing the backend build
+
+Build command:
 
 ```java
-docker build -t nycbike backend
+
+npm run backend:build
+
+> nycbike-redisgraph-react-go-charts@0.1.0 backend:build
+> docker build -t nycbike backend
 ```
 
 Output:
 
-```java
+```
 Sending build context to Docker daemon  19.97kB
 Step 1/10 : FROM alpine AS base
  ---> e66264b98777
 Step 2/10 : RUN apk add --no-cache curl wget
  ---> Using cache
  ---> 3da957b1292a
-Step 3/10 : FROM golang:1.11 AS go-builder
- ---> 43a154fee764
+Step 3/10 : FROM golang:1.18 AS go-builder
+ ---> 76199a964a3f
 Step 4/10 : WORKDIR /go/app
  ---> Using cache
- ---> 7014a5436739
+ ---> 489a2cdb4021
 Step 5/10 : COPY . /go/app
  ---> Using cache
- ---> b7fde7ada087
+ ---> abd9907480d0
 Step 6/10 : RUN GO111MODULE=on  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/app/main /go/app/main.go
- ---> Running in 3988b84d016c
-go: finding github.com/gorilla/mux v1.8.0
-go: finding github.com/gorilla/handlers v1.5.1
-go: finding github.com/mitchsw/redisgraph-go v0.2.0
-go: finding github.com/olekukonko/tablewriter v0.0.5
-go: finding github.com/gomodule/redigo v1.8.4
-go: finding github.com/mattn/go-runewidth v0.0.9
-go: finding github.com/gomodule/redigo v1.8.2
-go: finding github.com/olekukonko/tablewriter v0.0.4
-go: finding github.com/stretchr/testify v1.6.1
-go: finding github.com/stretchr/testify v1.5.1
-go: finding github.com/felixge/httpsnoop v1.0.1
-go: finding github.com/mattn/go-runewidth v0.0.7
-go: finding github.com/pmezard/go-difflib v1.0.0
-go: finding github.com/stretchr/objx v0.1.0
-go: finding github.com/davecgh/go-spew v1.1.0
-go: finding gopkg.in/yaml.v2 v2.2.2
-go: finding gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
-go: gopkg.in/yaml.v2@v2.2.2: unknown revision v2.2.2
-go: gopkg.in/yaml.v3@v3.0.0-20200313102051-9f266ea9e77c: git fetch -f origin refs/heads/*:refs/heads/* refs/tags/*:refs/tags/* in /go/pkg/mod/cache/vcs/5ea86ba1b933025fb7a7a539058d4acea777e0b3175c573a70130f7ea565323f: exit status 128:
-        fatal: unable to access 'https://gopkg.in/yaml.v3/': server certificate verification failed. CAfile: none CRLfile: none
-go: error loading module requirements
-The command '/bin/sh -c GO111MODULE=on  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/app/main /go/app/main.go' returned a non-zero code: 1
+ ---> Using cache
+ ---> 8cad5ccd8fc2
+Step 7/10 : FROM base
+ ---> 3da957b1292a
+Step 8/10 : COPY --from=go-builder /go/app/main /main
+ ---> Using cache
+ ---> 4d6606d7269a
+Step 9/10 : ENTRYPOINT ["/main"]
+ ---> Using cache
+ ---> 43a90448535e
+Step 10/10 : CMD ["--redis=localhost:6379", "--port=80"]
+ ---> Using cache
+ ---> 21061b2d03c3
+Successfully built 21061b2d03c3
+Successfully tagged nycbike:latest
 ```
 
-I tried these but they did not work:
+## Errors during docker-compose up
+
+Run Command:
 
 ```java
-sudo apt update && sudo apt install ca-certificates libgnutls30 -y
+npm run backend:up
 
-sudo apt-get --allow-releaseinfo-change update && sudo apt upgrade -y
+> nycbike-redisgraph-react-go-charts@0.1.0 backend:up
+> docker-compose up
+```
+
+Output:
+
+```java
+redismod_1  | 1:M 22 Jun 2022 03:52:14.109 * Module 'timeseries' loaded from /usr/lib/redis/modules/redistimeseries.so
+redismod_1  | 1:M 22 Jun 2022 03:52:14.110 * <ReJSON> version: 20011 git sha: 25ff494 branch: HEAD
+redismod_1  | 1:M 22 Jun 2022 03:52:14.110 * <ReJSON> Exported RedisJSON_V1 API
+redismod_1  | 1:M 22 Jun 2022 03:52:14.110 * <ReJSON> Enabled diskless replication
+redismod_1  | 1:M 22 Jun 2022 03:52:14.110 * <ReJSON> Created new data type 'ReJSON-RL'
+redismod_1  | 1:M 22 Jun 2022 03:52:14.111 * Module 'ReJSON' loaded from /usr/lib/redis/modules/rejson.so
+redismod_1  | 1:M 22 Jun 2022 03:52:14.111 * <search> Acquired RedisJSON_V1 API
+redismod_1  | 1:M 22 Jun 2022 03:52:14.111 * <graph> Acquired RedisJSON_V1 API
+redismod_1  | 1:M 22 Jun 2022 03:52:14.111 * Module 'bf' loaded from /usr/lib/redis/modules/redisbloom.so
+redismod_1  | 1:M 22 Jun 2022 03:52:14.112 # Module /var/opt/redislabs/lib/modules/redisgears.so failed to load: /var/opt/redislabs/lib/modules/redisgears.so: cannot open shared object file: No such file or directory
+redismod_1  | 1:M 22 Jun 2022 03:52:14.112 # Can't load module from /var/opt/redislabs/lib/modules/redisgears.so: server aborting
+```
+
+Run Command:
+
+```java
+npm run backend:up
+
+> nycbike-redisgraph-react-go-charts@0.1.0 backend:up
+> docker-compose up
 ```
 
 # NYC Bike
