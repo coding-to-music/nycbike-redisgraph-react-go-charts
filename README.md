@@ -108,6 +108,12 @@ redismod_1  | 1:M 22 Jun 2022 03:52:14.112 # Module /var/opt/redislabs/lib/modul
 redismod_1  | 1:M 22 Jun 2022 03:52:14.112 # Can't load module from /var/opt/redislabs/lib/modules/redisgears.so: server aborting
 ```
 
+Here is the reference to redisgears.so in `redis.conf``
+
+```
+loadmodule /var/opt/redislabs/lib/modules/redisgears.so
+```
+
 Run Command:
 
 ```java
