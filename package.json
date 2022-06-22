@@ -29,8 +29,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "serve": "serve -s build",
     "vercel": "npm run deploy && vercel --prod",
-    "deploy": "git add . && git commit -m Build && git push"
+    "deploy": "git add . && git commit -m Build && git push",
+    "frontend:build": "npm run build",
+    "backend:build": "docker build -t nycbike backend",
+    "backend:up": "docker-compose up",
+    "backend:load": "cd offline_importer && go run main.go --reset_graph=true"
   },
   "eslintConfig": {
     "extends": [
