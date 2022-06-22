@@ -11,6 +11,9 @@ import (
 	"github.com/mitchsw/nycbike/backend/backend"
 )
 
+// "github.com/coding-to-music/nycbike-redisgraph-react-go-charts/backend/backend"
+// "github.com/mitchsw/nycbike/backend/backend"
+
 func PrintVitals(mp *backend.ModelPool) {
 	m := mp.Get()
 	defer m.Close()
