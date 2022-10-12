@@ -1,7 +1,6 @@
 {
   "app_name": "NYC Bike",
   "description": "A visual geospatial index of over 58 million bikeshare trips across NYC",
-  "hidden": false,
   "type": "App",
   "contributed_by": "mitchsw",
   "repo_url": "https://github.com/mitchsw/nycbike",
