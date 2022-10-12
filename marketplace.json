@@ -22,6 +22,7 @@
     "SET",
     "WITH"
   ],
+  "deploy_buttons": [],
   "redis_modules": ["RedisGraph"],
   "app_image_urls": [
     "https://raw.githubusercontent.com/mitchsw/nycbike/main/full_ui.png?raw=true"
